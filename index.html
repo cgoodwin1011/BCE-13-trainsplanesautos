@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- reset browser styles --> 
+    <link rel="assets/stylesheet" type="text/css" media="screen" href="styles/reset.css"/>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/main.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="scripts/main.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+</head>
+<body>
+    <header>
+
+    </header>
+<body>
+<div id="wrapper">
+<div id="tranBoardHolder">
+    <table id="trainBoard">
+        <thead id="trainBoardHeading">
+            <td id="A00" class="cA r000 tableHeading">Train</td>
+            <td id="B00" class="cB r000 tableHeading">Destination</td>
+            <td id="C00" class="cC r000 tableHeading">First Morning Departure</td>
+            <td id="D00" class="cD r000 tableHeading">Time Between Trains</td>
+            <td id="E00" class="cE r000 tableHeading">Next Train Arrives at</td>
+        </thead>
+        <tr>
+            <td id="A01" class="cA r001 tableCell"></td>
+            <td id="B01" class="cB r001 tableCell"></td>
+            <td id="C01" class="cC r001 tableCell"></td>
+            <td id="D01" class="cD r001 tableCell"></td>
+            <td id="E01" class="cE r001 tableCell"></td>
+        </tr>
+    </table>
+</div>
+<div id="trainMasterConsole">
+
+</div>
+
+
+</div>
+</body>
+
+
+
+    <!-- //    trainName, destination, firstTrainTime, trainIntervalm, nextTrainTime  -->
+<script>
+    function makeTrain(name, destination, firstTimme, intervalBetween) {
+        this.name = name;
+        this.destination = destination;
+        this.firstTimme = firstTimme;
+        this.intervalBetween = intervalBetween;        
+    }
+
+
+
+
+</script>
+
+</body>
+</html>
