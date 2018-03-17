@@ -15,50 +15,125 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="scripts/main.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+    <script>
+        var config = {
+            apiKey: "AIzaSyDLTt-mR_khO9a96D-z2zRAcoMNJgW5Njs",
+            authDomain: "trainsrunningontime.firebaseapp.com",
+            databaseURL: "https://trainsrunningontime.firebaseio.com",
+            projectId: "trainsrunningontime",
+            storageBucket: "",
+            messagingSenderId: "741959202769"
+        };
+      firebase.initializeApp(config);
+    </script>
+
 </head>
 <body>
     <header>
 
     </header>
 <body>
-<div id="wrapper">
+<div id="wrapper" class="container">
+<div id="banner-top" class="jumbotron">Train Information</div>
 <div id="tranBoardHolder">
     <table id="trainBoard">
         <thead id="trainBoardHeading">
-            <td id="A00" class="cA r000 tableHeading">Train</td>
-            <td id="B00" class="cB r000 tableHeading">Destination</td>
-            <td id="C00" class="cC r000 tableHeading">First Morning Departure</td>
-            <td id="D00" class="cD r000 tableHeading">Time Between Trains</td>
-            <td id="E00" class="cE r000 tableHeading">Next Train Arrives at</td>
+            <td id="A000" class="cA r000 tableHeading">Train</td>
+            <td id="B000" class="cB r000 tableHeading">Destination</td>
+            <td id="C000" class="cC r000 tableHeading">First Morning<br>Departure</td>
+            <td id="D000" class="cD r000 tableHeading">Time Between<br>Trains</td>
+            <td id="E000" class="cE r000 tableHeading">Next Train<br>Arrives at</td>
         </thead>
-        <tr>
-            <td id="A01" class="cA r001 tableCell"></td>
-            <td id="B01" class="cB r001 tableCell"></td>
-            <td id="C01" class="cC r001 tableCell"></td>
-            <td id="D01" class="cD r001 tableCell"></td>
-            <td id="E01" class="cE r001 tableCell"></td>
+        <tr id="row001" class="r001">
+            <td id="A01" class="cA r001 tableCell">. . .</td>
+            <td id="B01" class="cB r001 tableCell">. . .</td>
+            <td id="C01" class="cC r001 tableCell">. . .</td>
+            <td id="D01" class="cD r001 tableCell">. . .</td>
+            <td id="E01" class="cE r001 tableCell">. . .</td>
         </tr>
     </table>
 </div>
 <div id="trainMasterConsole">
-
+<form><h2>Add Train</h2>
+    Train Name: <input type="text" id="train-name"><br>
+    Destination: <input type="text" id="train-destination"><br>
+    First Departure: <input type="text" id="train-morning-departure"><br>
+    Time Between Trains<input type="text" id="train-interval"><br>
+    <input type="submit" id="add-train" value="Add Train"> <button id="cancelBtn">Cancel</button>
+    <!-- Next Train to Arrive<input type="submit" id="add-train-button"></button> -->
+</form>
 </div>
 
 
 </div>
 </body>
-
-
-
     <!-- //    trainName, destination, firstTrainTime, trainIntervalm, nextTrainTime  -->
 <script>
-    function makeTrain(name, destination, firstTimme, intervalBetween) {
-        this.name = name;
-        this.destination = destination;
-        this.firstTimme = firstTimme;
-        this.intervalBetween = intervalBetween;        
+
+var allTrains = [];
+
+function makeTrain(name, destination, firstTime, intervalBetween) {
+    // debugger;
+    q = new Object();
+    q.name = name;
+    q.destination = destination;
+    q.firstTime = firstTime;
+    q.intervalBetween = intervalBetween;
+    debugger;
+    return q    
+    // need to add errror checking   
+}
+
+function addTrain(aTrain) {
+    var trainNum = allTrains.length + 1;
+    
+    if (trainNum < 10) {
+        numStr = '00'+trainNum;
+    
+    } else if (trainNum < 100) {
+        numStr = '0'+trainNum;
+    } else if (tranNum < 1000) {
+        numStr = trainNum.toString();
+    } else if (trainNum >= 1000) {
+        // ERROR CONDITION
     }
 
+    var nextTrain = 'temp'
+
+    line1 = '<tr id="row'+numStr+'" class="r'+numStr+'">'
+    line2 = '<td id="A'+numStr+'" class="cA r'+numStr+'tableCell">'+atrain.name.val()+'</td>'
+    line3 = '<td id="B'+numStr+'" class="cB r'+numStr+'tableCell">'+atrain.destination.val()+'</td>'
+    line4 = '<td id="C'+numStr+'" class="cC r'+numStr+'tableCell">'+atrain.firstTime.val()+'</td>'
+    line5 = '<td id="D'+numStr+'" class="cD r'+numStr+'tableCell">'+atrain.interval.val()+'</td>'
+    line6 = '<td id="E'+numStr+'" class="cE r'+numStr+'tableCell">'+nextTrain+'</td>'
+    line7 = '</tr>'
+    
+    var theHTML = line1+line2+line3+line4+line5+line6+line7;
+    console.log(theHTML);
+
+    $("#trainBoard").append(theHTML);
+}
+
+$("#add-train").on('click', function() {
+    // debugger;
+    // console.log("in add train")
+    
+    // console.log($("#train-name").val())
+    // console.log($("#train-destination").val())
+    // console.log($("#train-morning-departure").val())
+    // console.log($("#train-interval").val())
+    
+    var newTrain = makeTrain($("#train-name").val(), 
+                             $("#train-destination").val(), 
+                             $("#train-morning-departure").val(),
+                             $("#train-interval").val(),
+                            );
+    // debugger;
+    allTrains.push(newTrain);
+    // debugger;
+    addTrain(newTrain);
+    // debugger;
+});
 
 
 
