@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- reset browser styles --> 
+    <!-- reset browser styles -->
     <link rel="assets/stylesheet" type="text/css" media="screen" href="styles/reset.css"/>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -15,7 +15,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="scripts/main.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
-    <script>
+    <!-- <script>
         var config = {
             apiKey: "AIzaSyDLTt-mR_khO9a96D-z2zRAcoMNJgW5Njs",
             authDomain: "trainsrunningontime.firebaseapp.com",
@@ -25,16 +25,24 @@
             messagingSenderId: "741959202769"
         };
       firebase.initializeApp(config);
-    </script>
+    </script> -->
 
 </head>
 <body>
-    <header>
-
-    </header>
-<body>
+<header>
+</header>
 <div id="wrapper" class="container">
 <div id="banner-top" class="jumbotron">Train Information</div>
+
+<div id="trainMasterConsole">
+<form><h2>Add Train</h2>
+    Train Name: <input type="text" id="train-name"><br>
+    Destination: <input type="text" id="train-destination"><br>
+    First Departure: <input type="text" id="train-morning-departure"><br>
+    Time Between Trains<input type="text" id="train-interval"><br>
+    <input type="submit" id="add-train" value="Add Train"> <button id="cancelBtn">Cancel</button>
+    <!-- Next Train to Arrive<input type="submit" id="add-train-button"></button> -->
+</form>
 <div id="tranBoardHolder">
     <table id="trainBoard">
         <thead id="trainBoardHeading">
@@ -52,90 +60,34 @@
             <td id="E01" class="cE r001 tableCell">. . .</td>
         </tr>
     </table>
-</div>
-<div id="trainMasterConsole">
-<form><h2>Add Train</h2>
-    Train Name: <input type="text" id="train-name"><br>
-    Destination: <input type="text" id="train-destination"><br>
-    First Departure: <input type="text" id="train-morning-departure"><br>
-    Time Between Trains<input type="text" id="train-interval"><br>
-    <input type="submit" id="add-train" value="Add Train"> <button id="cancelBtn">Cancel</button>
-    <!-- Next Train to Arrive<input type="submit" id="add-train-button"></button> -->
-</form>
-</div>
+</div></div>
 
 
 </div>
-</body>
     <!-- //    trainName, destination, firstTrainTime, trainIntervalm, nextTrainTime  -->
-<script>
+
+    <script>
 
 var allTrains = [];
 
-function makeTrain(name, destination, firstTime, intervalBetween) {
-    // debugger;
-    q = new Object();
-    q.name = name;
-    q.destination = destination;
-    q.firstTime = firstTime;
-    q.intervalBetween = intervalBetween;
-    debugger;
-    return q    
-    // need to add errror checking   
-}
-
-function addTrain(aTrain) {
-    var trainNum = allTrains.length + 1;
-    
-    if (trainNum < 10) {
-        numStr = '00'+trainNum;
-    
-    } else if (trainNum < 100) {
-        numStr = '0'+trainNum;
-    } else if (tranNum < 1000) {
-        numStr = trainNum.toString();
-    } else if (trainNum >= 1000) {
-        // ERROR CONDITION
-    }
-
-    var nextTrain = 'temp'
-
-    line1 = '<tr id="row'+numStr+'" class="r'+numStr+'">'
-    line2 = '<td id="A'+numStr+'" class="cA r'+numStr+'tableCell">'+atrain.name.val()+'</td>'
-    line3 = '<td id="B'+numStr+'" class="cB r'+numStr+'tableCell">'+atrain.destination.val()+'</td>'
-    line4 = '<td id="C'+numStr+'" class="cC r'+numStr+'tableCell">'+atrain.firstTime.val()+'</td>'
-    line5 = '<td id="D'+numStr+'" class="cD r'+numStr+'tableCell">'+atrain.interval.val()+'</td>'
-    line6 = '<td id="E'+numStr+'" class="cE r'+numStr+'tableCell">'+nextTrain+'</td>'
-    line7 = '</tr>'
-    
-    var theHTML = line1+line2+line3+line4+line5+line6+line7;
-    console.log(theHTML);
-
-    $("#trainBoard").append(theHTML);
-}
-
 $("#add-train").on('click', function() {
     // debugger;
-    // console.log("in add train")
-    
-    // console.log($("#train-name").val())
-    // console.log($("#train-destination").val())
-    // console.log($("#train-morning-departure").val())
-    // console.log($("#train-interval").val())
-    
-    var newTrain = makeTrain($("#train-name").val(), 
-                             $("#train-destination").val(), 
+    event.preventDefault();
+    console.log("add trade btn clicked")
+
+    var newTrain = makeTrain($("#train-name").val(),
+                             $("#train-destination").val(),
                              $("#train-morning-departure").val(),
                              $("#train-interval").val(),
                             );
     // debugger;
+    // console.log("newTrain is "+newTrain.name+" "+newTrain.destination+" "+newTrain.firstTime+" "+newTrain.interval)
     allTrains.push(newTrain);
+    // console.log("about to call addTrain and allTrains is "+allTrains[0])
     // debugger;
-    addTrain(newTrain);
-    // debugger;
+    displayTrain(allTrains[allTrains.length-1]);
+    $("#A01").css("background-color", "green");
 });
-
-
 
 </script>
 
