@@ -1,21 +1,52 @@
-@font-face {
+/* @font-face {
     font-family: 'LED';
     src: url('../fonts/led/led_real.txt') format('truetype');
-  }
+  } */
+
+
+#add-train-banner {
+    text-align: center;
+    font-family: 'Italianno', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 3em;
+}
 
 body {
     background: #000000;
     font-size: 1.5em;
 }
 
-#clock, .clock {
-    font-family: 'LED', 'Orbitron', monospace;
+.cA, .cB {
+    width: 20%;
+}
+
+.cC, .cD, .cE {
+    text-align: center;
+    width: 10%;
+}
+
+#clock {
+    font-family: 'Roboto Mono','Orbitron', monospace;
+    font-size: 3em;
+    border: 1px white solid;
+    border-radius: 5px;
+    width: 6em;
+    margin: auto;
+    /* font-family: 'Orbitron', sans-serif; */
+}
+
+.clock {
+    font-family: 'Orbitron', monospace;
     /* font-family: 'Orbitron', sans-serif; */
 }
 
 .container {
     color: white;
     background-color: #333333;
+}
+
+#controls-banner {
+    float: left;
+    width: 40%;
 }
 
 .float-left {
@@ -33,11 +64,22 @@ body {
     min-width: 100px;
 }
 
+h1, #sm-controls {
+    font-family: 'Italianno', monospace;
+    font-size: 3em;
+}
+
 .jumbotron {
     text-align: center;
     border: 1px black solid;
     background-color: #777777;
     margin-top: 10px;
+    overflow: auto;
+}
+
+#poster {
+    float: right;
+    width: 25%;
 }
 
 .row {
@@ -62,6 +104,8 @@ th {
     min-height: 100px;
     border-radius: 20px;
     border: 1px #333333 solid;
+    width: 75%;
+    margin:auto;
 
 }
 
@@ -69,7 +113,26 @@ th {
 #train-destination,
 #train-daily-departure,
 #train-interval {
-    color: red;
+    /* color: red; */
+    color: black;
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+@media (max-width: 768px) {
+    .float-left, .float-right {
+        float: none;
+        clear: none;
+        text-align: center;
+    }
+
+    input {
+        text-align: center;
+        margin: auto;
+    }
+
+    .row {
+        text-align: center;
+    }
+
 }

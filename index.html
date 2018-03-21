@@ -7,7 +7,7 @@
   <title>Trains Running On Time</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Orbitron|Roboto+Mono|Italianno" rel="stylesheet">
   <!-- reset browser styles -->
   <link rel="assets/stylesheet" type="text/css" media="screen" href="styles/reset.css" />
   <!-- Latest compiled and minified CSS -->
@@ -31,12 +31,17 @@
   </header>
   <div id="wrapper" class="container">
     <div id="banner-top" class="jumbotron">
-      <h1>Train Information</h1>
-      <h3>Station Master Controls</h3>
-      <h3 class="clock">Current Time:</h3>
-      <h3 id="clock">00:00:00</h3>
+      
+      <div id="controls-banner">
+          <h1>Train Information</h1>
+        <h3 id="sm-controls">Station Master Controls</h3>
+        <h3 class="clock">Current Time:</h3>
+        <h3 id="clock">00:00:00</h3>
+      </div>
+      <div>
+        <img id="poster" src="images/b7cc7580b212117d5ad7c55988d9ef81.jpg">
+      </div>
     </div>
-
     <div id="train-board-holder">
       <table id="train-board" class="table table-bordered">
         <thead class="thead-light">
@@ -56,77 +61,66 @@
 
     <div id="trainMasterConsole">
       <form>
-        <h2>Add Train</h2>
+        <h2 id="add-train-banner">Add Train</h2>
         <div class="row">
           <div class="col-md-6 col-sm-6">
             <span class="float-right">Train Name: </span>
-            <input type="text" id="train-name" class="float-right form-control" tabindex="1" placeholder="Cardinal">
+            <input type="text" id="train-name" class="float-right form-control" tabindex="1" placeholder="e.g., Cardinal">
             <span class="float-right">Destination: </span>
-            <input type="text" id="train-destination" class="float-right form-control" tabindex="2" placeholder="Chicago, IL">
+            <input type="text" id="train-destination" class="float-right form-control" tabindex="2" placeholder="e.g., Chicago, IL">
             <input type="submit" id="add-train" class="float-right btn btn-success" value="Add Train" tabindex="5">
           </div>
           <div class="col-md-6 col-sm-6">
             <span class="float-left">First Departure
               <span id="time-explainer">(hh:mm, 24-hour Time)</span id="time-explainer">: </span>
-            <input type="text" id="train-daily-departure" class="float-left form-control" tabindex="3" placeholder="05:07">
+            <input type="text" id="train-daily-departure" class="float-left form-control" tabindex="3" placeholder="e.g., 05:07">
             <span class="float-left">Time Between Trains
-              <span id="time-explainer">(hh:mm)</span>: </span>
-            <input type="text" id="train-interval" class="float-left form-control" tabindex="4" placeholder="02:20">
+              <span id="time-explainer">(in minutes)</span>: </span>
+            <input type="text" id="train-interval" class="float-left form-control" tabindex="4" placeholder="e.g., 44">
             <button id="cancelBtn" class="float-left btn btn-danger" tabindex="6">Cancel</button>
           </div>
         </div>
       </form>
     </div>
 
-    <script>
+<script>
 
-      var currentTime = moment().format("HH:mm:ss");
-      setInterval( function() {
-        currentTime = moment().format("HH:mm:ss");
-        $("#clock").html(currentTime);
-      }, 1000)
+  //to add a train
+  $("#add-train").on('click', function () {
+    event.preventDefault();
+    if (validateTime($("#train-daily-departure").val()) != -1) {
+      $("#train-daily-departure").val( validateTime($("#train-daily-departure").val()) )
+      var newTrain = makeTrain($("#train-name").val(),
+      $("#train-destination").val(),
+      $("#train-daily-departure").val(),
+      $("#train-interval").val(),
+      );
+      allTrains.push(newTrain);
+      
+    // and add train to database    
+      database.ref().push({
+        newTrain
+     })
+    
+    } else {
+      $("#train-daily-departure").val("Enter a valid time");
+    }
+    
 
-      $("#add-train").on('click', function () {
-        event.preventDefault();
-        if (validateTime($("#train-daily-departure").val()) != -1) {
-          console.log("good time");
-          $("#train-daily-departure").val( validateTime($("#train-daily-departure").val()) )
-        } else {
-          console.log("raise error")
-          $("#train-daily-departure").attr("placeholder", "please enter a valid time");
-
-        }
-        var newTrain = makeTrain($("#train-name").val(),
-          $("#train-destination").val(),
-          $("#train-daily-departure").val(),
-          $("#train-interval").val(),
-        );
-        allTrains.push(newTrain);
-
-        displayTrain(allTrains[allTrains.length - 1]);
-        
-        console.log("newTrain.startTime is "+newTrain.firstTime+"newTrain.interval is "+newTrain.interval )
-        console.log(nextTrainTime(newTrain.startTime, newTrain.interval));
-
-        // database.ref().set({
-        //   working: "yes"
-        // })
-        database.ref().set({
-          allTrainsFB: JSON.stringify([allTrains.length - 1]),
-        });
-      });
+  });
 
 
-function nextTrainTime(startTime, interval) {
-  var now = moment();
-  console.log("Now is "+now.format("hh:mm"))
-  console.log("start time is "+startTime);
-  var timeBetween = moment().diff(now, startTime);
-  var lastTrain = timeBetween % interval;
-  var nextTrain = interval - lastTrain;
-  return nextTrain;
-}
+  //update train display
+  database.ref().on("child_added", function(snapshot) {
+    var thisStuff = snapshot.val();
+    displayTrain(thisStuff.newTrain);
 
+    // Handle the errors
+    }, function(errorObject) {
+
+    console.log("Errors handled: " + errorObject.code);
+
+  });
 
 
 
