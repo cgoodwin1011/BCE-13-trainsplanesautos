@@ -1,95 +1,137 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- reset browser styles -->
-    <link rel="assets/stylesheet" type="text/css" media="screen" href="styles/reset.css"/>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" media="screen" href="styles/main.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="scripts/main.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
-    <!-- <script>
-        var config = {
-            apiKey: "AIzaSyDLTt-mR_khO9a96D-z2zRAcoMNJgW5Njs",
-            authDomain: "trainsrunningontime.firebaseapp.com",
-            databaseURL: "https://trainsrunningontime.firebaseio.com",
-            projectId: "trainsrunningontime",
-            storageBucket: "",
-            messagingSenderId: "741959202769"
-        };
-      firebase.initializeApp(config);
-    </script> -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Trains Running On Time</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
+  <!-- reset browser styles -->
+  <link rel="assets/stylesheet" type="text/css" media="screen" href="styles/reset.css" />
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+    crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" media="screen" href="styles/main.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- <script scr="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.js"></script> -->
+  <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+
+  <script src="scripts/main.js"></script>
 
 </head>
+
 <body>
-<header>
-</header>
-<div id="wrapper" class="container">
-<div id="banner-top" class="jumbotron">Train Information</div>
+  <header>
+  </header>
+  <div id="wrapper" class="container">
+    <div id="banner-top" class="jumbotron">
+      <h1>Train Information</h1>
+      <h3>Station Master Controls</h3>
+      <h3 class="clock">Current Time:</h3>
+      <h3 id="clock">00:00:00</h3>
+    </div>
 
-<div id="trainMasterConsole">
-<form><h2>Add Train</h2>
-    Train Name: <input type="text" id="train-name"><br>
-    Destination: <input type="text" id="train-destination"><br>
-    First Departure: <input type="text" id="train-morning-departure"><br>
-    Time Between Trains<input type="text" id="train-interval"><br>
-    <input type="submit" id="add-train" value="Add Train"> <button id="cancelBtn">Cancel</button>
-    <!-- Next Train to Arrive<input type="submit" id="add-train-button"></button> -->
-</form>
-<div id="tranBoardHolder">
-    <table id="trainBoard">
-        <thead id="trainBoardHeading">
-            <td id="A000" class="cA r000 tableHeading">Train</td>
-            <td id="B000" class="cB r000 tableHeading">Destination</td>
-            <td id="C000" class="cC r000 tableHeading">First Morning<br>Departure</td>
-            <td id="D000" class="cD r000 tableHeading">Time Between<br>Trains</td>
-            <td id="E000" class="cE r000 tableHeading">Next Train<br>Arrives at</td>
+    <div id="train-board-holder">
+      <table id="train-board" class="table table-bordered">
+        <thead class="thead-light">
+          <tr id="trainBoardHeading">
+            <th id="A000" class="cA r000 tableHeading">Train Name</th>
+            <th id="B000" class="cB r000 tableHeading">Destination</th>
+            <th id="C000" class="cC r000 tableHeading">First Daily
+            <br>Departure</th>
+            <th id="D000" class="cD r000 tableHeading">Time Between
+            <br>Trains</th>
+            <th id="E000" class="cE r000 tableHeading">Next Train
+            <br>Arrives at</th>
+          </tr>
         </thead>
-        <tr id="row001" class="r001">
-            <td id="A01" class="cA r001 tableCell">. . .</td>
-            <td id="B01" class="cB r001 tableCell">. . .</td>
-            <td id="C01" class="cC r001 tableCell">. . .</td>
-            <td id="D01" class="cD r001 tableCell">. . .</td>
-            <td id="E01" class="cE r001 tableCell">. . .</td>
-        </tr>
-    </table>
-</div></div>
+      </table>
+    </div>
 
-
-</div>
-    <!-- //    trainName, destination, firstTrainTime, trainIntervalm, nextTrainTime  -->
+    <div id="trainMasterConsole">
+      <form>
+        <h2>Add Train</h2>
+        <div class="row">
+          <div class="col-md-6 col-sm-6">
+            <span class="float-right">Train Name: </span>
+            <input type="text" id="train-name" class="float-right form-control" tabindex="1" placeholder="Cardinal">
+            <span class="float-right">Destination: </span>
+            <input type="text" id="train-destination" class="float-right form-control" tabindex="2" placeholder="Chicago, IL">
+            <input type="submit" id="add-train" class="float-right btn btn-success" value="Add Train" tabindex="5">
+          </div>
+          <div class="col-md-6 col-sm-6">
+            <span class="float-left">First Departure
+              <span id="time-explainer">(hh:mm, 24-hour Time)</span id="time-explainer">: </span>
+            <input type="text" id="train-daily-departure" class="float-left form-control" tabindex="3" placeholder="05:07">
+            <span class="float-left">Time Between Trains
+              <span id="time-explainer">(hh:mm)</span>: </span>
+            <input type="text" id="train-interval" class="float-left form-control" tabindex="4" placeholder="02:20">
+            <button id="cancelBtn" class="float-left btn btn-danger" tabindex="6">Cancel</button>
+          </div>
+        </div>
+      </form>
+    </div>
 
     <script>
 
-var allTrains = [];
+      var currentTime = moment().format("HH:mm:ss");
+      setInterval( function() {
+        currentTime = moment().format("HH:mm:ss");
+        $("#clock").html(currentTime);
+      }, 1000)
 
-$("#add-train").on('click', function() {
-    // debugger;
-    event.preventDefault();
-    console.log("add trade btn clicked")
+      $("#add-train").on('click', function () {
+        event.preventDefault();
+        if (validateTime($("#train-daily-departure").val()) != -1) {
+          console.log("good time");
+          $("#train-daily-departure").val( validateTime($("#train-daily-departure").val()) )
+        } else {
+          console.log("raise error")
+          $("#train-daily-departure").attr("placeholder", "please enter a valid time");
 
-    var newTrain = makeTrain($("#train-name").val(),
-                             $("#train-destination").val(),
-                             $("#train-morning-departure").val(),
-                             $("#train-interval").val(),
-                            );
-    // debugger;
-    // console.log("newTrain is "+newTrain.name+" "+newTrain.destination+" "+newTrain.firstTime+" "+newTrain.interval)
-    allTrains.push(newTrain);
-    // console.log("about to call addTrain and allTrains is "+allTrains[0])
-    // debugger;
-    displayTrain(allTrains[allTrains.length-1]);
-    $("#A01").css("background-color", "green");
-});
+        }
+        var newTrain = makeTrain($("#train-name").val(),
+          $("#train-destination").val(),
+          $("#train-daily-departure").val(),
+          $("#train-interval").val(),
+        );
+        allTrains.push(newTrain);
+
+        displayTrain(allTrains[allTrains.length - 1]);
+        
+        console.log("newTrain.startTime is "+newTrain.firstTime+"newTrain.interval is "+newTrain.interval )
+        console.log(nextTrainTime(newTrain.startTime, newTrain.interval));
+
+        // database.ref().set({
+        //   working: "yes"
+        // })
+        database.ref().set({
+          allTrainsFB: JSON.stringify([allTrains.length - 1]),
+        });
+      });
+
+
+function nextTrainTime(startTime, interval) {
+  var now = moment();
+  console.log("Now is "+now.format("hh:mm"))
+  console.log("start time is "+startTime);
+  var timeBetween = moment().diff(now, startTime);
+  var lastTrain = timeBetween % interval;
+  var nextTrain = interval - lastTrain;
+  return nextTrain;
+}
+
+
+
 
 </script>
 
 </body>
+
 </html>

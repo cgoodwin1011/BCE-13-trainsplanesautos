@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- reset browser styles -->
+  <link rel="assets/stylesheet" type="text/css" media="screen" href="styles/reset.css" />
+  <!-- Latest compiled and minified CSS -->
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous"> -->
+  <!-- Optional theme -->
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+    crossorigin="anonymous"> -->
+  <!-- <link rel="stylesheet" type="text/css" media="screen" href="styles/main.css" /> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- <script scr="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.js"></script> -->
+  <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+
+  <script src="scripts/main.js"></script>
+
+</head>
+
+<body>
+  <header>
+  </header>
+<div id="the-div">
+</div>
+
+<script>
+
+$("#the-div").html("<h1>Hi there</h1>");
+var theTime = moment();
+$("#the-div").append("<p>It is now "+moment().format("HH:mm")+"</p>");
+var soonTime = moment("15:00", "HH:mm")
+$("#the-div").append("<p>And 3 PM is "+soonTime.format("hh:mm")+"</p>");
+var theDiff = moment(soonTime).diff(theTime, 'minutes');
+$("#the-div").append("<p>The difference is "+theDiff+" </p>");
+var earlier = moment("05:11", "HH:mm");
+var later = moment("17:11", "HH:mm");
+var difference = later.diff(difference, "minutes");
+console.log(earlier, later, difference);
+var duration = moment.duration(earlier.diff(later));
+console.log(duration)
+
+
+
+
+function nextTrainTime(startTime, interval) {
+  var now = moment();
+  console.log("Now is "+now.format("hh:mm"))
+  console.log("start time is "+startTime);
+  var timeBetween = moment().diff(now, startTime);
+  var lastTrain = timeBetween % interval;
+  var nextTrain = interval - lastTrain;
+  return nextTrain;
+}
+
+
+
+
+</script>
+
+</body>
+
+</html>
